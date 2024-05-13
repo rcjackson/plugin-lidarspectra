@@ -1,0 +1,10 @@
+# for additional pywaggle install options, see: https://github.com/waggle-sensor/pywaggle#installation-guides
+paramiko
+sage-data-client
+matplotlib
+xarray
+netcdf4
+scipy
+pint
+act-atmos
+pywaggle
