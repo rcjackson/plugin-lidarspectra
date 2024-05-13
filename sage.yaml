@@ -1,0 +1,13 @@
+name: "lidar_spectra"
+version: "0.1"
+description: "Plugin for Processing lidar spectra"
+keywords: ""
+authors: "Bobby Jackson"
+collaborators: ""
+funding: "U.S. Department of Energy"
+license: ""
+homepage: ""
+source:
+  architectures:
+    - "linux/amd64"
+    - "linux/arm64"
