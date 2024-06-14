@@ -6,5 +6,4 @@ xarray
 netcdf4
 scipy
 pint
-act-atmos
 pywaggle
