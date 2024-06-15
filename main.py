@@ -47,6 +47,10 @@ if __name__ == "__main__":
             help='Lidar password')
     parser.add_argument('--processing_time', type=str, default='',
             help='Process given time period [YYYYMMDD.HH]')
+    parser.add_argument('--time_resolution', type=int, default=10,
+            help='Process given time period [YYYYMMDD.HH]')
+    parser.add_argument('--gate_resolution', type=int, default=60,
+            help='Process given time period [YYYYMMDD.HH]')
     parser.add_argument('--processing_interval', type=int, default=200,
             help='Number of points to store in processing interval')
     parser.add_argument('--nfft', type=int, default=1024,
@@ -122,7 +126,7 @@ if __name__ == "__main__":
                     logging.debug("%d" % pinned_mempool.n_free_blocks())
                     try:
                         ds_out = highiq.calc.get_psd(raw_file, nfft=nfft,
-                                time_window=10, gate_resolution=60)
+                                time_window=args.time_resolution, gate_resolution=args.gate_resolution)
                         raw_file = None
                     except TypeError:
                         raw_file.close()
@@ -180,5 +184,4 @@ if __name__ == "__main__":
                 if args.delete == True:
                     logging.debug("Removing %s" % f)
                     sftp.remove(os.path.join(file_path, name))
-                    continue
 
