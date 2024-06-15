@@ -11,5 +11,6 @@ RUN pip3 install -r requirements.txt
 RUN apt-get install -y libhdf5-serial-dev python3-h5py
 RUN pip3 install h5netcdf
 COPY . .
-RUN pip3 install --upgrade git+https://github.com/rcjackson/HighIQ.git
+RUN echo "why"
+RUN pip3 install git+https://github.com/rcjackson/HighIQ.git
 ENTRYPOINT ["python3", "main.py"]
