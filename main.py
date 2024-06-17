@@ -137,25 +137,8 @@ if __name__ == "__main__":
                      
                     ds_out = highiq.calc.get_lidar_moments(
                            ds_out, intensity_thresh=1.008)
-                    ds_out["power_spectral_density"] = ds_out["power_spectral_density"].where(
-                    ds_out["intensity"] > 1.008)
-                    time_range_shape = ds_out["intensity"].shape
-                    spectrum_index = np.where(
-                            ds_out["intensity"].values.flatten() > 1.008, 1, 0)
-                    which = spectrum_index.cumsum() - 1
-                    spectrum_index[spectrum_index > 0] = which[spectrum_index > 0]
-                    spectrum_index = np.reshape(spectrum_index, time_range_shape)
-                    ds_out["spectrum_index"] = (["time", "range"], spectrum_index)
-                    ds_out["spectrum_index"].attrs["long_name"] = "Spectrum index"
-                    ds_out["spectrum_index"].attrs["units"] = "1"
-                    psd = ds_out["power_spectral_density"].values.reshape(
-                        (time_range_shape[0] * time_range_shape[1], nfft))
-                    psd = psd[spectrum_index.flatten()]
-                    psd_attrs = ds_out["power_spectral_density"].attrs
-                    ds_out["power_spectral_density"] = (["index", "sample"], psd)
-                    ds_out["power_spectral_density"].attrs = psd_attrs
-                    ds_out["doppler_velocity"] = ds_out["doppler_velocity_max_peak"]
                     ds_out = ds_out.drop("doppler_velocity_max_peak")
+                    ds_out["range"] = ("range", args.gate_resolution * np.arange(ds_out.sizes['range']))
                     mempool.free_all_blocks()
                     pinned_mempool.free_all_blocks()
                     # Compress the data
