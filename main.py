@@ -55,6 +55,8 @@ if __name__ == "__main__":
             help='Number of points to store in processing interval')
     parser.add_argument('--nfft', type=int, default=1024,
             help="Number of points in the FFT for spectral processing")
+    parser.add_argument('--site', type=str, default='caco', 
+            help='Site name')
     parser.add_argument('--delete', default=False, action='store_true',
             help="Delete spectra for given time period then exit.")
     parser.add_argument('--prev_hour', default=False, action='store_true',
@@ -85,6 +87,7 @@ if __name__ == "__main__":
         pmonth = prev_hour.month
         phour = prev_hour.hour
         file_path = "/C:/Lidar/Data/Raw/%d/%d%02d/%d%02d%02d/" % (year, year, month, year, month, day)
+        site = args.site
         file_pathp = "/C:/Lidar/Data/Raw/%d/%d%02d/%d%02d%02d/" % (pyear, pyear, pmonth, pyear, pmonth, pday)
         mempool = cupy.get_default_memory_pool()
         pinned_mempool = cupy.get_default_pinned_memory_pool()
@@ -150,7 +153,7 @@ if __name__ == "__main__":
                     
                     lidar_file = file_list[0]
                     start_time_str = str(ds_out['time'][0].dt.strftime('%Y%m%d.%H%M%S').values)
-                    out_file_name = 'nant.lidarspectra.z02.c1.%s.nc' % start_time_str
+                    out_file_name = '%s.lidarspectra.z02.c1.%s.nc' % (site, start_time_str)
                     ds_out.to_netcdf(out_file_name, 
                             encoding=encoding)
                     ds_out.close()
